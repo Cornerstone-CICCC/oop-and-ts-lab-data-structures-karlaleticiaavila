@@ -5,7 +5,24 @@
 const Queue = require('../lib/Queue');
 
 function isPalindrome(queue) {
-  // your code here
+  const tempQueue = new Queue();
+  const stack = [];
+while (!queue.isEmpty()) {
+  const element = queue.dequeue();   // first fifo
+  tempQueue.enqueue(element);        // save in tempQueue to restore later
+  stack.push(element);               // save
+}
+  while (!tempQueue.isEmpty()) {
+    queue.enqueue(tempQueue.dequeue());
+  }
+  let isPalindrome = true;
+  for (let i = 0; i < stack.length / 2; i++) {
+    if (stack[i] !== stack[stack.length - 1 - i]) {
+      isPalindrome = false;
+      break;
+    }
+  }
+  return isPalindrome;
 }
 
 const queue = new Queue();
